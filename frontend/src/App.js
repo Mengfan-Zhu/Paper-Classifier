@@ -17,7 +17,7 @@ export const App = () => {
 
   function getResult() {
 
-    return fetch("http://127.0.0.1:5000/backend/classifier").then(response => response.json()
+    return fetch("http://127.0.0.1:5000/backend/classifier?url=" + url).then(response => response.json()
     .then(data => {setResult(data.result);}));
   }
   return (
