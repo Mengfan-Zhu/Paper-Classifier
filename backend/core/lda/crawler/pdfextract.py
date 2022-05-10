@@ -2,7 +2,7 @@ import io
 
 import requests
 from PyPDF2 import PdfFileReader
-
+from gensim.parsing.preprocessing import remove_stopwords, preprocess_string
 
 def getContentPDF(url):
     r = requests.get(url)
@@ -13,7 +13,9 @@ def getContentPDF(url):
     contents = ''
     for i in range(pages):
         contents += reader.getPage(i).extractText()
-    return contents.split('\n')
+    contents = remove_stopwords(contents)
+    contents = preprocess_string(contents)
+    return contents
     
 url = 'https://www.researchgate.net/profile/Ferdinando-Samaria/publication/220611207_HMM-based_architecture_for_face_identification/links/5c670ed8299bf1e3a5abdff0/HMM-based-architecture-for-face-identification.pdf'
 
