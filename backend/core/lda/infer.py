@@ -1,8 +1,8 @@
 from gensim.test.utils import common_texts, common_corpus
-from gensim.corpora.dictionary import Dictionary
+from gensim import corpora
 from gensim.models import LdaModel
 from crawler.pdfextract import getContentPDF
-
+from gensim.models import Phrases, LdaModel
 model_path = "../../../model/lda_update.model"
 model = LdaModel.load(model_path)
 # print the topics
@@ -13,11 +13,10 @@ url = 'https://www.researchgate.net/profile/Ferdinando-Samaria/publication/22061
 new_doc = [
     ['computer', 'time', 'graph'],
     ['survey', 'response', 'eps'],
-    ['text', 'retrieval', 'advance','science'],
+    ['text', 'retrieval', 'advance','science','aaaa'],
 ]
-print(common_texts,len(common_texts))
-common_dictionary = Dictionary(common_texts)
-other_corpus = [common_dictionary.doc2bow(text) for text in new_doc]
+dictionary = corpora.Dictionary.load("../../../model/nips.dict")
+other_corpus = [dictionary.doc2bow(text) for text in new_doc]
 print(other_corpus)
 unseen_doc = other_corpus[2]
 vector = model[unseen_doc]
