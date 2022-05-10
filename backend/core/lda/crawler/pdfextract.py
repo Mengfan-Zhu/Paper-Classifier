@@ -20,7 +20,7 @@ def getContentPDF(url):
     contents = preprocess_string(contents)
     return contents
     
-url = 'https://www.researchgate.net/profile/Ferdinando-Samaria/publication/220611207_HMM-based_architecture_for_face_identification/links/5c670ed8299bf1e3a5abdff0/HMM-based-architecture-for-face-identification.pdf'
+url = 'http://www.cs.cmu.edu/~tom/pubs/Science-ML-2015.pdf'
 
 
 def getContentPDF_pdfminer(url):
