@@ -2,7 +2,7 @@ from flask import Flask, request
 from gensim.test.utils import common_texts, common_corpus
 from gensim import corpora
 from gensim.models import LdaModel
-from crawler.pdfextract import getContentPDF
+from crawler.pdfextract import getContentPDF,get_titles_links
 from gensim.models import Phrases, LdaModel
 from collections import defaultdict
 model_path = "../model/lda_update.model"
@@ -38,7 +38,7 @@ def classifier():
     else:
         return ERROR
     res = defaultdict(list)
-    papers = {'computer science':['computer','text','retrival','hmm','classifier']}
+    papers = get_titles_links(url,debug=True)
     for key,val in papers.items():
         res[infer(val)].append(key)
     return res
