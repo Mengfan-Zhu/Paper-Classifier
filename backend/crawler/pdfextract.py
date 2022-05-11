@@ -67,5 +67,5 @@ def get_titles_links(url, debug=False):
         words = getContentPDF(links[i], debug=debug)
         if words == None:
             words = titles[i].split(' ')
-        dic[titles[i]] = words
+        dic[titles[i]] = (words, links[i])
     return dic
