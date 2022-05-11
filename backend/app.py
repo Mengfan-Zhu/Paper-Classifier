@@ -5,6 +5,7 @@ from gensim.models import LdaModel
 from crawler.pdfextract import getContentPDF,get_titles_links
 from gensim.models import Phrases, LdaModel
 from collections import defaultdict
+import json
 model_path = "../model/lda_update.model"
 model = LdaModel.load(model_path)
 # print the topics
@@ -41,7 +42,6 @@ def classifier():
     else:
         url = body.get("url")
     print(url)
-    res = ""
     res = defaultdict(list)
     papers = get_titles_links(url,debug=True)
     for key,val in papers.items():
@@ -51,4 +51,6 @@ def classifier():
         dic['title'] = key
         dic['link'] = link
         res[topic].append(dic)
+    res = json.dumps(res)
+    print(res)
     return res
