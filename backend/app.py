@@ -33,10 +33,12 @@ ERROR = "No URL Found"
 # route config
 @app.route('/backend/classifier', methods=['POST'])
 def classifier():
-    if 'url' in request.args:
-        url = str(request.args['url'])
-    else:
+    body = request.json
+    url = ''
+    if not body:
         return ERROR
+    else:
+        url = body
     res = defaultdict(list)
     papers = get_titles_links(url,debug=True)
     for key,val in papers.items():
