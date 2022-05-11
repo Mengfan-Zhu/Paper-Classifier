@@ -37,8 +37,8 @@ def classifier():
         url = str(request.args['url'])
     else:
         return ERROR
-    res = defaultdict([])
+    res = defaultdict(list)
     papers = {'computer science':['computer','text','retrival','hmm','classifier']}
-    for key,val in papers:
+    for key,val in papers.items():
         res[infer(val)].append(key)
     return res
