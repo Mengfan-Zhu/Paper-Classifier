@@ -43,5 +43,10 @@ def classifier():
     res = defaultdict(list)
     papers = get_titles_links(url,debug=True)
     for key,val in papers.items():
-        res[infer(val)].append(key)
+        texts, link = val
+        topic = infer(texts)
+        dic = {}
+        dic['title'] = key
+        dic['link'] = link
+        res[topic].append(dic)
     return res
