@@ -3,6 +3,7 @@ Train the lda model using NIPS corpus
 Reference: https://radimrehurek.com/gensim/auto_examples/tutorials/run_lda.html
 You may need to run download.py before run this file for the first time
 """
+from doctest import DocFileSuite
 import re
 import tarfile
 import smart_open
@@ -52,6 +53,7 @@ def pre_process(docs):
     dictionary = Dictionary(docs)
     # Filter out words that occur less than 20 documents, or more than 50% of the documents.
     dictionary.filter_extremes(no_below=20, no_above=0.5)
+    dictionary.save("nips.dict")
 
     ## get corpus and id2word
     corpus = [dictionary.doc2bow(doc) for doc in docs]

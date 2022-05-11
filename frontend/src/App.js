@@ -1,7 +1,9 @@
 /* global chrome */
+//import requests;
 import logo from './logo.svg';
 import './App.css';
 import React, {useState, useEffect} from 'react';
+
 export const App = () => {
   const [url, setUrl] = useState('');
   const [result, setResult] = useState('');
@@ -18,8 +20,15 @@ export const App = () => {
 
   //make fetch call
   function getResult() {
-    return fetch("http://127.0.0.1:5000/backend/classifier?url=" + url).then(response => response.json()
-    .then(data => {setResult(data.result);}));
+    
+    //return fetch("http://127.0.0.1:5000/backend/classifier",url).then(response => response.json().then(data => {setResult(data.result);}));
+    return fetch('http://127.0.0.1:5000/backend/classifier', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({url})
+      }).then(res=>res.json()).then(data=>console.log(data)) 
   }
   
   //can remove url portion later
