@@ -33,7 +33,8 @@ ERROR = "No URL Found"
 # route config
 @app.route('/backend/classifier', methods=['POST'])
 def classifier():
-    body = request.json
+    body = request.data
+    print(body)
     url = ''
     if not body:
         return ERROR

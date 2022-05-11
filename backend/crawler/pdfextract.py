@@ -50,7 +50,7 @@ def getContentPDF_pdfminer(url):
     return words
 #print(getContentPDF(url))
 
-def get_titles_links(url):
+def get_titles_links(url, debug=False):
     page = init_soup(url)
     titles_elems = page.find_all("a", attrs={'id':True, 'href':True, 'data-clk': True})
     titles = []
@@ -64,7 +64,7 @@ def get_titles_links(url):
         links.append(paper['href'])
     dic = {}
     for i in range(len(titles)):
-        words = getContentPDF(links[i])
+        words = getContentPDF(links[i], debug=debug)
         if words == None:
             words = titles[i].split(' ')
         dic[titles[i]] = words
