@@ -5,6 +5,7 @@ from gensim.models import LdaModel
 from crawler.pdfextract import getContentPDF,get_titles_links
 from gensim.models import Phrases, LdaModel
 from collections import defaultdict
+from flask_cors import CORS, cross_origin
 import json
 model_path = "../model/lda_update.model"
 model = LdaModel.load(model_path)
@@ -30,6 +31,8 @@ def infer(paper):
             topic = i[0]
     return topics[topic]
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 ERROR = "No URL Found"
 # route config
 @app.route('/backend/classifier', methods=['POST'])
