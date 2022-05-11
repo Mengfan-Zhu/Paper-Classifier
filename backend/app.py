@@ -19,7 +19,7 @@ def infer(paper):
     ]
     dictionary = corpora.Dictionary.load("../model/nips.dict")
     other_corpus = [dictionary.doc2bow(text) for text in new_doc]
-    unseen_doc = other_corpus[3]
+    unseen_doc = other_corpus[0]
     vector = model[unseen_doc]
     topic = vector[0][0]
     prob = vector[0][1]
@@ -31,14 +31,14 @@ def infer(paper):
 app = Flask(__name__)
 ERROR = "No URL Found"
 # route config
-@app.route('/backend/classifier')
+@app.route('/backend/classifier', methods=['POST'])
 def classifier():
     if 'url' in request.args:
         url = str(request.args['url'])
     else:
         return ERROR
     res = defaultdict([])
-    urls = func
-    for key,val in urls:
+    papers = {'computer science':['computer','text','retrival','hmm','classifier']}
+    for key,val in papers:
         res[infer(val)].append(key)
     return res
