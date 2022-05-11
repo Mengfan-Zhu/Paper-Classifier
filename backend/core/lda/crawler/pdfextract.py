@@ -8,7 +8,11 @@ from gensim.parsing.preprocessing import preprocess_string, remove_stopwords, st
 from crawler.soup import init_soup
 import gensim
 import re
-def getContentPDF(url):
+def getContentPDF(url, debug=False):
+    if debug:
+        print('getting', url)
+    if '.pdf' not in url and '/pdf' not in url and '.PDF' not in url:
+        return None
     r = requests.get(url)
     f = io.BytesIO(r.content)
     reader = PdfFileReader(f)
@@ -27,13 +31,9 @@ def getContentPDF(url):
     # Remove words that are only one character.
     words = [word for word in words if len(word) > 1]
     return words
-    
-url = 'http://www.cs.cmu.edu/~tom/pubs/Science-ML-2015.pdf'
-
 
 def getContentPDF_pdfminer(url):
-    print(url)
-    if '.pdf' not in url and '/pdf' not in url:
+    if '.pdf' not in url and '/pdf' not in url and '.PDF' not in url:
         return None
     r = requests.get(url)
     f = io.BytesIO(r.content)
@@ -52,24 +52,20 @@ def getContentPDF_pdfminer(url):
 
 def get_titles_links(url):
     page = init_soup(url)
-    titles_elems = page.findAll("a", attrs={'id':True, 'href':True, 'data-clk': True})
-    papers_elems = page.findAll("a", attrs= {'id':False, 'href': True, 'data-clk': True, 'data-clk-atid':True})
+    titles_elems = page.find_all("a", attrs={'id':True, 'href':True, 'data-clk': True})
     titles = []
     links = []
     
     # {"id", "href","data-clk"}
     for title in titles_elems:
         titles.append(title.text)
-        print(title.text)
-    for paper in papers_elems:
+        id = title['data-clk-atid']
+        paper = page.find('a', attrs={'data-clk-atid':id })
         links.append(paper['href'])
-        print(paper['href'])
-    print(len(links))
-    print(len(titles))
     dic = {}
-    # for i in range(len(titles)):
-    #     words = getContentPDF_pdfminer(links[i])
-    #     if words == None:
-    #         words = titles[i].split(' ')
-    #     dic[titles[i]] = words
+    for i in range(len(titles)):
+        words = getContentPDF(links[i])
+        if words == None:
+            words = titles[i].split(' ')
+        dic[titles[i]] = words
     return dic
