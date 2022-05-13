@@ -15,7 +15,7 @@ Download the source code with
 ### Install other support libraries
 
 You need to install some support libraries if you don't have them in you local machine. Here are the names of the packages you need.<br>
-`flask, flask_cors, gensim, nltk, pdfminer.six,  PyPDF2`<br>
+`flask, flask_cors, gensim, nltk, pdfminer.six, bs4, PyPDF2`<br>
 You can use `pip install <package-name>` to install the library. <br>
 If you are not sure about whether you already have this library, you can use `pip show <package-name>` to check about it.
 
